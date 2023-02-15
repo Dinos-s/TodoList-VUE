@@ -1,0 +1,24 @@
+{
+  "todos": [
+    {
+      "title": "Estudar javascript",
+      "completed": true,
+      "id": 1
+    },
+    {
+      "id": 2,
+      "title": "Estudar Vue",
+      "completed": false
+    },
+    {
+      "title": "Estudar composition API",
+      "completed": true,
+      "id": 3
+    },
+    {
+      "title": "Aprender Pinia",
+      "completed": false,
+      "id": 4
+    }
+  ]
+}
