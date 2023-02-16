@@ -16,24 +16,29 @@ import Spinner from './components/todoSpinner.vue'
 import Form from './components/todoForm.vue'
 import Items from './components/todoItems.vue'
 import Empty from './components/todoEmpty.vue'
+import { ref } from 'vue'
+import { useStore } from 'vuex'
+
 export default {
   name: 'App',
-  data() {
-    return{
-      loading: false,
-    }
-  },
   components:{
     Spinner,
     Form,
     Items,
     Empty
   },
-  created(){
-    this.loading = true
-    this.$store.dispatch('getTodos').finally(()=>{
-      this.loading = false
+  setup(){
+    const loading = ref(false)
+    const store = useStore()
+    
+    loading.value = true
+    store.dispatch('getTodos').finally(() =>{
+      loading.value = false
     })
+
+    return {
+      loading,
+    }
   }
 }
 </script>
