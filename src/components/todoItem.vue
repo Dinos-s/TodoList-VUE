@@ -31,47 +31,55 @@
 </template>
 
 <script>
+import { ref } from 'vue';
+import { useStore } from 'vuex';
+
 export default{
     name: 'todoItem',
-    data(){
-        return{
-            title: this.todo.title,
-            isCompleted: this.todo.completed
-        }
-    },
     props: {
         todo: {
             type: Object,
             default: () => ({}),
         }
     },
-    methods: {
-        onTitleChange($evt){
-            this.title = $evt.target.value;
-            if (!this.title) {
-                return
-            }
-            this.updateTodo()
-        },
+    setup(props){
+        const title = ref(props.todo.title)
+        const isCompleted = ref(props.todo.completed)
+        const store = useStore()
 
-        updateTodo(){
+        const updateTodo = () => {
             const payload = {
-                id: this.todo.id,
+                id: props.todo.id,
                 data: {
-                    title: this.title,
-                    completed: this.isCompleted
+                    title: title.value,
+                    completed: isCompleted.value
                 }
             }
-            this.$store.dispatch('updateTodo', payload)
-        },
+            store.dispatch('updateTodo', payload)
+        }
 
-        onCheckClick(){
-            this.isCompleted = !this.isCompleted
-            this.updateTodo()
-        },
+        const onTitleChange = () => {
+            if (!title.value) {
+                return
+            }
+            updateTodo()
+        }
 
-        onDelete(){
-            this.$store.dispatch('deleteTodo', this.todo.id)
+        const onCheckClick = () => {
+            isCompleted.value = !isCompleted.value
+            updateTodo()
+        }
+
+        const onDelete = () => {
+            store.dispatch('deleteTodo', props.todo.id)
+        }
+
+        return{
+            title,
+            isCompleted,
+            onCheckClick,
+            onTitleChange,
+            onDelete
         }
     }
 }

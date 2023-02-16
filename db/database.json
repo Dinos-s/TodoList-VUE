@@ -6,9 +6,9 @@
       "id": 1
     },
     {
-      "id": 2,
       "title": "Estudar Vue",
-      "completed": false
+      "completed": true,
+      "id": 2
     },
     {
       "title": "Estudar composition API",
